@@ -1,1 +1,1 @@
-# ConfAutoMaisqueQue1DiaDeSorte
+# ConfAutoMaisQue1DiaDeSorte

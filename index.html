@@ -1056,12 +1056,8 @@
                     console.log("Não foi possível reproduzir som", error);
                 }
                 
-                // Se houver 5 ou mais acertos, parar a geração automática
-                // e a verificação automática
-                if (intervalId && autoCheckingEnabled) {
-                    stopAutoGeneration();
-                    checkingStopped = true;
-                }
+                // MODIFICADO: Não parar a verificação automática mesmo quando encontrar 5+ acertos
+                // Apenas continuar a verificação e exibir o resultado
                 
                 // Retornar sucesso com acerto premiado
                 return { 
@@ -1219,7 +1215,7 @@
                 return;
             }
             
-            // Se encontramos um ganhador, mostrar mensagem de vitória e parar
+            // Se encontramos um ganhador, mostrar mensagem de vitória, mas CONTINUAR verificando
             if (result.winner) {
                 document.getElementById('conferencia-resultado').classList.remove('hidden');
                 document.getElementById('conferencia-msg').textContent = `PALPITE GANHADOR ENCONTRADO! Palpite ${result.palpiteId} com ${result.matchCount} acertos!`;
@@ -1228,14 +1224,13 @@
                 // Mostrar palpite vencedor
                 updateResults(result.palpiteId, result.matchCount, result.monthMatch, true);
                 
-                // Parar a verificação automática
-                if (isAuto) {
-                    checkingStopped = true;
-                    if (intervalId) {
-                        stopAutoGeneration();
-                    }
+                // MODIFICADO: Não parar a verificação automática mesmo quando encontrar um ganhador
+                // Continue verificando o próximo palpite se ainda houver mais
+                if (currentCheckIndex < allPalpites.length && isAuto && autoCheckingEnabled && !checkingStopped) {
+                    setTimeout(() => {
+                        checkNextPalpite(true);
+                    }, 100);
                 }
-                
                 return;
             }
             
@@ -1536,11 +1531,8 @@
                     console.log("Não foi possível reproduzir som", error);
                 }
                 
-                // Parar geração automática se encontrou vencedor
-                if (intervalId && autoCheckingEnabled) {
-                    stopAutoGeneration();
-                    checkingStopped = true;
-                }
+                // MODIFICADO: Não parar a geração automática mesmo quando encontrar vencedor
+                // Apenas continuar verificando
             } else {
                 let mensagem = `<div class="text-center">
                     ${totalVerificados} palpites verificados. Nenhum vencedor encontrado.
