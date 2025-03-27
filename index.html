@@ -5,6 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Dia da Sorte - Gerador de Palpites</title>
     <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.18.5/xlsx.full.min.js"></script>
     <script>
         tailwind.config = {
             darkMode: 'class',
@@ -19,11 +20,28 @@
     </script>
 </head>
 <body class="bg-white dark:bg-gray-900 min-h-screen transition-colors duration-200">
+    <!-- Elemento de áudio para o beep -->
+    <audio id="beep-sound" preload="auto">
+        <source src="data:audio/mp3;base64,SUQzBAAAAAABEVRYWFgAAAAtAAADY29tbWVudABCaWdTb3VuZEJhbmsuY29tIC8gTGFzb25pY0NvbXBsZXguY29tAAAAQ09NTAEAAAARBGF0aXN0AAA/VEVOVAEAAA1MYXNvbmljAAAAVFlFUgAAAAUAAABUUkFDSwAAAAEAAAAvVElUMgAAABcAAABCaWcgU291bmQgQmFuayBCZWVwAAAAWFhYWAAAABoAAHByaXZhdGUAQmlnIFNvdW5kIEJhbmsAAP/7kGQAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAEluZm8AAAAPAAAABQAAAkAAUFBQUFBQUFBQkJCQkJCQkJCQsLCwsLCwsLDQ0NDQ0NDQ0NDw8PDw8PDw8P//////////////////AAAAOUxBTUUzLjk5cgGqAAAAAC4WAAA0/1RJRDMAAAAeAAAAAQAAgD4AAzIAAklMRUMyAAAAAAADQgDwyMQFQQAAAABMSVNUMQAAAFRJVDIAAAAIAGEAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA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" type="audio/mp3">
+    </audio>
     <div class="container mx-auto px-4 py-8">
         <h1 class="text-3xl font-bold text-center text-gray-800 dark:text-white mb-8">Dia da Sorte</h1>
         
         <div class="max-w-md mx-auto bg-white dark:bg-gray-800 rounded-lg shadow-md p-6 mb-6">
             <h2 class="text-xl font-semibold text-gray-700 dark:text-gray-200 mb-4">Gerador de Palpites</h2>
+            
+            <!-- Botão de teste de áudio -->
+            <div class="bg-blue-100 dark:bg-blue-900 p-3 rounded-lg mb-4">
+                <div class="flex justify-between items-center">
+                    <div class="text-sm text-blue-800 dark:text-blue-200">
+                        <span class="font-bold">Teste de áudio:</span> Clique no botão ao lado para verificar se o som está funcionando.
+                    </div>
+                    <button id="test-audio-btn" class="bg-blue-500 hover:bg-blue-600 text-white text-sm py-1 px-3 rounded">
+                        Testar Som
+                    </button>
+                </div>
+                <div id="audio-status" class="text-xs mt-1 text-blue-700 dark:text-blue-300">Sistema de áudio inicializado.</div>
+            </div>
             
             <div class="mb-2">
                 <div class="flex items-center gap-3 mb-3">
@@ -124,6 +142,7 @@
                         </div>
                     </div>
                     
+                    <!-- Remaining palpite sections (3-5) follow the same pattern... -->
                     <!-- Palpite 3 -->
                     <div class="palpite-group mb-4 p-3 rounded-lg border border-gray-200 dark:border-gray-700">
                         <div class="flex items-center justify-between mb-2">
@@ -301,7 +320,7 @@
             <p class="text-gray-600 dark:text-gray-300 mb-2">Clique no botão "Gerar Palpite" para obter 7 números aleatórios entre 1 e 31, sem repetições.</p>
             <p class="text-gray-600 dark:text-gray-300 mb-2">Para conferir seus palpites, preencha os campos e escolha entre:
             <ul class="list-disc pl-5 text-gray-600 dark:text-gray-300 mb-2">
-                <li><b>Conferir Próximo Palpite</b>: Verifica um palpite por vez, parando quando encontrar um vencedor (5+ acertos)</li>
+                <li><b>Conferir Próximo Palpite</b>: Verifica um palpite por vez</li>
                 <li><b>Conferir Todos</b>: Verifica todos os seus palpites de uma vez</li>
             </ul>
             <p class="text-gray-600 dark:text-gray-300 mb-2">Para geração automática, selecione um intervalo de tempo no menu suspenso. Quando ativo, um contador mostrará o tempo restante para o próximo palpite.</p>
@@ -310,20 +329,51 @@
             <div id="history-section" class="mt-6 border-t border-gray-200 dark:border-gray-700 pt-4">
                 <div class="flex justify-between items-center mb-3">
                     <h4 class="text-sm font-medium text-gray-700 dark:text-gray-300">Histórico de grandes acertos (5+)</h4>
-                    <button id="show-freq-btn" class="text-xs px-2 py-1 bg-primary text-white rounded hover:bg-primary/90 flex items-center gap-1">
-                        <svg xmlns="http://www.w3.org/2000/svg" class="h-3 w-3" viewBox="0 0 20 20" fill="currentColor">
-                            <path d="M2 11a1 1 0 011-1h2a1 1 0 011 1v5a1 1 0 01-1 1H3a1 1 0 01-1-1v-5z" />
-                            <path d="M8 7a1 1 0 011-1h2a1 1 0 011 1v9a1 1 0 01-1 1H9a1 1 0 01-1-1V7z" />
-                            <path d="M14 4a1 1 0 011-1h2a1 1 0 011 1v12a1 1 0 01-1 1h-2a1 1 0 01-1-1V4z" />
-                        </svg>
-                        Frequência
-                    </button>
+                    <div class="flex space-x-2">
+                        <button id="show-freq-btn" class="text-xs px-2 py-1 bg-primary text-white rounded hover:bg-primary/90 flex items-center gap-1">
+                            <svg xmlns="http://www.w3.org/2000/svg" class="h-3 w-3" viewBox="0 0 20 20" fill="currentColor">
+                                <path d="M2 11a1 1 0 011-1h2a1 1 0 011 1v5a1 1 0 01-1 1H3a1 1 0 01-1-1v-5z" />
+                                <path d="M8 7a1 1 0 011-1h2a1 1 0 011 1v9a1 1 0 01-1 1H9a1 1 0 01-1-1V7z" />
+                                <path d="M14 4a1 1 0 011-1h2a1 1 0 011 1v12a1 1 0 01-1 1h-2a1 1 0 01-1-1V4z" />
+                            </svg>
+                            Frequência
+                        </button>
+                        <!-- NOVO: Botão para exportar histórico -->
+                        <button id="export-history-btn" class="text-xs px-2 py-1 bg-green-600 text-white rounded hover:bg-green-700 flex items-center gap-1">
+                            <svg xmlns="http://www.w3.org/2000/svg" class="h-3 w-3" viewBox="0 0 20 20" fill="currentColor">
+                                <path fill-rule="evenodd" d="M3 17a1 1 0 011-1h12a1 1 0 110 2H4a1 1 0 01-1-1zm3.293-7.707a1 1 0 011.414 0L9 10.586V3a1 1 0 112 0v7.586l1.293-1.293a1 1 0 111.414 1.414l-3 3a1 1 0 01-1.414 0l-3-3a1 1 0 010-1.414z" clip-rule="evenodd" />
+                            </svg>
+                            Exportar
+                        </button>
+                    </div>
                 </div>
                 
                 <!-- Frequência de acertos -->
                 <div id="frequency-stats" class="mb-4 p-3 bg-gray-50 dark:bg-gray-700 rounded-md hidden">
                     <h5 class="text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">Frequência de acertos:</h5>
                     <div id="frequency-content"></div>
+                </div>
+                
+                <!-- NOVO: Seção para exportar histórico -->
+                <div id="export-options" class="mb-4 p-3 bg-gray-50 dark:bg-gray-700 rounded-md hidden">
+                    <h5 class="text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">Exportar histórico completo:</h5>
+                    <div class="flex gap-2 mt-2">
+                        <button id="export-excel-btn" class="flex-1 py-1 px-2 bg-green-600 hover:bg-green-700 text-white text-xs font-medium rounded transition-colors duration-200 flex items-center justify-center">
+                            <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 mr-1" viewBox="0 0 20 20" fill="currentColor">
+                                <path fill-rule="evenodd" d="M3 17a1 1 0 011-1h12a1 1 0 110 2H4a1 1 0 01-1-1zm3.293-7.707a1 1 0 011.414 0L9 10.586V3a1 1 0 112 0v7.586l1.293-1.293a1 1 0 111.414 1.414l-3 3a1 1 0 01-1.414 0l-3-3a1 1 0 010-1.414z" clip-rule="evenodd" />
+                            </svg>
+                            Excel (.xlsx)
+                        </button>
+                        <button id="export-html-btn" class="flex-1 py-1 px-2 bg-blue-600 hover:bg-blue-700 text-white text-xs font-medium rounded transition-colors duration-200 flex items-center justify-center">
+                            <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 mr-1" viewBox="0 0 20 20" fill="currentColor">
+                                <path fill-rule="evenodd" d="M3 17a1 1 0 011-1h12a1 1 0 110 2H4a1 1 0 01-1-1zm3.293-7.707a1 1 0 011.414 0L9 10.586V3a1 1 0 112 0v7.586l1.293-1.293a1 1 0 111.414 1.414l-3 3a1 1 0 01-1.414 0l-3-3a1 1 0 010-1.414z" clip-rule="evenodd" />
+                            </svg>
+                            HTML
+                        </button>
+                    </div>
+                    <div class="mt-2 text-xs text-gray-500 dark:text-gray-400">
+                        Os arquivos exportados contêm o histórico completo de acertos, mesmo os que não são mais exibidos na interface.
+                    </div>
                 </div>
                 
                 <!-- Histórico de grandes acertos -->
@@ -338,6 +388,99 @@
     </div>
 
     <script>
+        // Sistema de áudio - COMPLETAMENTE REFEITO
+        let audioContext = null;
+        let audioInitialized = false;
+
+        // Função para inicializar o contexto de áudio
+        function initAudio() {
+            try {
+                // Criar um contexto de áudio apenas se não existir
+                if (!audioContext) {
+                    audioContext = new (window.AudioContext || window.webkitAudioContext)();
+                    audioInitialized = true;
+                    document.getElementById('audio-status').textContent = 'Sistema de áudio inicializado.';
+                    return true;
+                }
+                return audioInitialized;
+            } catch (e) {
+                console.error("Erro ao inicializar áudio:", e);
+                document.getElementById('audio-status').textContent = 'Erro ao inicializar áudio: ' + e.message;
+                return false;
+            }
+        }
+
+        // Função de beep simples - usando Web Audio API diretamente
+        function playAlertSound() {
+            if (!initAudio()) {
+                console.error("Não foi possível tocar som: áudio não inicializado");
+                document.getElementById('audio-status').textContent = 'Não foi possível tocar som: áudio não inicializado';
+                return;
+            }
+            
+            try {
+                // Log para debug
+                console.log("Reproduzindo som de alerta");
+                document.getElementById('audio-status').textContent = 'Reproduzindo som de alerta...';
+                
+                // Criar oscilador e nó de ganho
+                const oscillator = audioContext.createOscillator();
+                const gainNode = audioContext.createGain();
+                
+                // Configurar oscilador para um som agudo (alerta)
+                oscillator.type = 'sine';
+                oscillator.frequency.setValueAtTime(780, audioContext.currentTime);
+                oscillator.connect(gainNode);
+                gainNode.connect(audioContext.destination);
+                
+                // Configurar volume
+                gainNode.gain.setValueAtTime(0.5, audioContext.currentTime);
+                
+                // Iniciar som
+                oscillator.start();
+                
+                // Controlar a duração do som (500ms)
+                setTimeout(() => {
+                    // Fade out suave
+                    gainNode.gain.exponentialRampToValueAtTime(0.01, audioContext.currentTime + 0.2);
+                    // Parar o oscilador após o fade out
+                    setTimeout(() => {
+                        oscillator.stop();
+                        document.getElementById('audio-status').textContent = 'Som de alerta reproduzido com sucesso!';
+                    }, 200);
+                }, 300);
+                
+                // Efeito visual de destaque quando um beep é tocado
+                highlightMatchCounter();
+                
+                return true;
+            } catch (e) {
+                console.error("Erro ao reproduzir som:", e);
+                document.getElementById('audio-status').textContent = 'Erro ao reproduzir som: ' + e.message;
+                return false;
+            }
+        }
+        
+        // Função para destacar visualmente o contador de acertos
+        function highlightMatchCounter() {
+            const matchCounter = document.getElementById('match-counter');
+            if (!matchCounter) return;
+            
+            // Adicionar classe de destaque (flash)
+            matchCounter.classList.add('flash-highlight');
+            
+            // Remover classe após animação
+            setTimeout(() => {
+                matchCounter.classList.remove('flash-highlight');
+            }, 1000);
+        }
+
+        // Função para testar o áudio (botão de teste)
+        document.getElementById('test-audio-btn').addEventListener('click', function() {
+            initAudio();
+            playAlertSound();
+        });
+
         // Detectar modo escuro
         if (window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches) {
             document.documentElement.classList.add('dark');
@@ -368,6 +511,7 @@
         let userGuessMonth = null;
         const historyLimit = 10; // Número máximo de itens no histórico
         let detailedHistoryData = [];
+        let completeHistoryData = []; // NOVO: Histórico completo sem limite
         
         // Sistema de registro de todos os números sorteados (persistente)
         let numerosSorteadosHistorico = [];
@@ -389,6 +533,18 @@
             "60": "1 minuto"
         };
         
+        // Função para tocar o beep
+        function playBeep() {
+            const beepSound = document.getElementById('beep-sound');
+            if (beepSound) {
+                // Resetar o áudio para permitir reprodução múltipla
+                beepSound.currentTime = 0;
+                beepSound.play().catch(e => {
+                    console.log("Erro ao tocar beep:", e);
+                });
+            }
+        }
+        
         // Carregar histórico anterior se existir
         try {
             // Carregar histórico de sorteios
@@ -402,13 +558,14 @@
             const acertosSalvos = localStorage.getItem('diaDaSorteAcertos');
             if (acertosSalvos) {
                 detailedHistoryData = JSON.parse(acertosSalvos);
+                completeHistoryData = [...detailedHistoryData]; // Manter uma cópia completa
                 console.log(`Histórico de acertos carregado: ${detailedHistoryData.length} registros`);
-                // Não mostramos mais o histórico visualmente, apenas registramos em segundo plano
             }
         } catch (e) {
             console.log("Não foi possível carregar o histórico:", e);
             numerosSorteadosHistorico = [];
             detailedHistoryData = [];
+            completeHistoryData = [];
         }
         const monthNames = [
             "Janeiro", "Fevereiro", "Março", "Abril", "Maio", "Junho",
@@ -717,15 +874,16 @@
             
             // Adicionar ao histórico
             detailedHistoryData.push(detailedRecord);
+            completeHistoryData.push(detailedRecord); // Adiciona ao histórico completo
             
-            // Manter o limite de registros (para evitar excesso de memória)
+            // Manter o limite de registros exibidos (para evitar excesso de memória)
             if (detailedHistoryData.length > 100) {
                 detailedHistoryData = detailedHistoryData.slice(-100);
             }
             
             // Salvar o histórico de acertos no localStorage para persistência
             try {
-                localStorage.setItem('diaDaSorteAcertos', JSON.stringify(detailedHistoryData));
+                localStorage.setItem('diaDaSorteAcertos', JSON.stringify(completeHistoryData));
                 console.log("Acertos salvos no registro:", JSON.stringify(detailedRecord, null, 2));
             } catch (e) {
                 console.log("Não foi possível salvar os acertos localmente:", e);
@@ -1038,6 +1196,9 @@
             
             // Atualizar o status visual deste palpite
             if (matchCount >= 5) {
+                // NOVO: Tocar o beep para 5+ acertos
+                playBeep();
+                
                 // Destacar o palpite em caso de 5+ acertos
                 palpiteGroup.classList.add('border-green-500', 'bg-green-50', 'dark:bg-green-900/10');
                 statusElement.textContent = `${matchCount} acertos + Mês: ${monthMatch ? 'Sim' : 'Não'}`;
@@ -1049,15 +1210,7 @@
                 // Atualizar o resumo de acertos
                 updateResults(palpiteId, matchCount, monthMatch, true);
                 
-                // Tocar som de vitória
-                try {
-                    createWinSound();
-                } catch (error) {
-                    console.log("Não foi possível reproduzir som", error);
-                }
-                
-                // MODIFICADO: Não parar a verificação automática mesmo quando encontrar 5+ acertos
-                // Apenas continuar a verificação e exibir o resultado
+                // MODIFICADO: Continuar verificando mesmo com 5+ acertos
                 
                 // Retornar sucesso com acerto premiado
                 return { 
@@ -1224,8 +1377,7 @@
                 // Mostrar palpite vencedor
                 updateResults(result.palpiteId, result.matchCount, result.monthMatch, true);
                 
-                // MODIFICADO: Não parar a verificação automática mesmo quando encontrar um ganhador
-                // Continue verificando o próximo palpite se ainda houver mais
+                // MODIFICADO: Continuar verificando mesmo quando encontrar um ganhador
                 if (currentCheckIndex < allPalpites.length && isAuto && autoCheckingEnabled && !checkingStopped) {
                     setTimeout(() => {
                         checkNextPalpite(true);
@@ -1321,11 +1473,214 @@
             return mensagem;
         }
         
-        // Configurar o botão de exibir frequência
+        // NOVO: Funções para exportação de dados
+        
+        // Função para exportar histórico para Excel (.xlsx)
+        function exportToExcel() {
+            try {
+                // Garantir que temos dados para exportar
+                if (completeHistoryData.length === 0) {
+                    alert("Não há dados para exportar. Faça alguns acertos primeiro.");
+                    return;
+                }
+                
+                // Criar um nome de arquivo baseado na data atual
+                const fileName = `Dia_da_Sorte_Historico_${new Date().toISOString().slice(0, 10)}.xlsx`;
+                
+                // Preparar os dados para o formato de planilha
+                const worksheetData = completeHistoryData.map(record => {
+                    return {
+                        'ID': record.id,
+                        'Data/Hora': record.datetime,
+                        'Palpite ID': record.palpiteId,
+                        'Número do Palpite': record.palpiteCounter || 'N/A',
+                        'Acertos': record.matchCount,
+                        'Números do Usuário': record.userNumbers.join(', '),
+                        'Números Sorteados': record.generatedNumbers.join(', '),
+                        'Números Acertados': record.matchedNumbers.join(', '),
+                        'Mês do Usuário': record.userMonth,
+                        'Mês Sorteado': record.actualMonth,
+                        'Acertou Mês': record.monthMatch ? 'Sim' : 'Não',
+                        'Intervalo': record.intervalo ? intervalTexts[record.intervalo.toString()] : 'N/A'
+                    };
+                });
+                
+                // Criar a planilha
+                const worksheet = XLSX.utils.json_to_sheet(worksheetData);
+                
+                // Criar o workbook e adicionar a planilha
+                const workbook = XLSX.utils.book_new();
+                XLSX.utils.book_append_sheet(workbook, worksheet, "Histórico de Acertos");
+                
+                // Converter para binário e fazer o download
+                XLSX.writeFile(workbook, fileName);
+                
+                console.log("Exportação para Excel concluída:", fileName);
+            } catch (error) {
+                console.error("Erro ao exportar para Excel:", error);
+                alert("Ocorreu um erro ao exportar os dados para Excel: " + error.message);
+            }
+        }
+        
+        // Função para exportar histórico para HTML
+        function exportToHTML() {
+            try {
+                // Garantir que temos dados para exportar
+                if (completeHistoryData.length === 0) {
+                    alert("Não há dados para exportar. Faça alguns acertos primeiro.");
+                    return;
+                }
+                
+                // Criar um nome de arquivo baseado na data atual
+                const fileName = `Dia_da_Sorte_Historico_${new Date().toISOString().slice(0, 10)}.html`;
+                
+                // Criar o conteúdo HTML
+                let htmlContent = `
+                <!DOCTYPE html>
+                <html lang="pt-BR">
+                <head>
+                    <meta charset="UTF-8">
+                    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+                    <title>Histórico de Acertos - Dia da Sorte</title>
+                    <style>
+                        body {
+                            font-family: Arial, sans-serif;
+                            line-height: 1.6;
+                            color: #333;
+                            max-width: 1200px;
+                            margin: 0 auto;
+                            padding: 20px;
+                        }
+                        h1 {
+                            text-align: center;
+                            color: #5D5CDE;
+                            margin-bottom: 30px;
+                        }
+                        table {
+                            width: 100%;
+                            border-collapse: collapse;
+                            margin-bottom: 30px;
+                        }
+                        th, td {
+                            padding: 10px;
+                            border: 1px solid #ddd;
+                            text-align: left;
+                        }
+                        th {
+                            background-color: #f2f2f2;
+                            font-weight: bold;
+                        }
+                        tr:nth-child(even) {
+                            background-color: #f9f9f9;
+                        }
+                        .match-count-5 { color: #10B981; font-weight: bold; }
+                        .match-count-6 { color: #0EA5E9; font-weight: bold; }
+                        .match-count-7 { color: #EF4444; font-weight: bold; }
+                        .totals {
+                            margin-top: 20px;
+                            font-weight: bold;
+                        }
+                        .export-date {
+                            text-align: right;
+                            font-style: italic;
+                            margin-top: 40px;
+                            color: #666;
+                        }
+                    </style>
+                </head>
+                <body>
+                    <h1>Histórico de Acertos - Dia da Sorte</h1>
+                    
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>Data/Hora</th>
+                                <th>Palpite ID</th>
+                                <th>Número do Palpite</th>
+                                <th>Acertos</th>
+                                <th>Números Acertados</th>
+                                <th>Mês Acertado</th>
+                                <th>Números do Usuário</th>
+                                <th>Números Sorteados</th>
+                                <th>Intervalo</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                `;
+                
+                // Adicionar uma linha para cada registro, com formatação especial para 5, 6 e 7 acertos
+                completeHistoryData.forEach(record => {
+                    const matchCountClass = `match-count-${record.matchCount}`;
+                    
+                    htmlContent += `
+                        <tr>
+                            <td>${record.datetime}</td>
+                            <td>${record.palpiteId}</td>
+                            <td>${record.palpiteCounter || 'N/A'}</td>
+                            <td class="${matchCountClass}">${record.matchCount}</td>
+                            <td>${record.matchedNumbers.join(', ')}</td>
+                            <td>${record.monthMatch ? 'Sim' : 'Não'}</td>
+                            <td>${record.userNumbers.join(', ')}</td>
+                            <td>${record.generatedNumbers.join(', ')}</td>
+                            <td>${record.intervalo ? intervalTexts[record.intervalo.toString()] : 'N/A'}</td>
+                        </tr>
+                    `;
+                });
+                
+                // Calcular alguns totais
+                const acertos5 = completeHistoryData.filter(r => r.matchCount === 5).length;
+                const acertos6 = completeHistoryData.filter(r => r.matchCount === 6).length;
+                const acertos7 = completeHistoryData.filter(r => r.matchCount === 7).length;
+                
+                // Fechar a tabela e adicionar rodapé
+                htmlContent += `
+                        </tbody>
+                    </table>
+                    
+                    <div class="totals">
+                        <p>Total de registros: ${completeHistoryData.length}</p>
+                        <p>Acertos de 5 números: <span class="match-count-5">${acertos5}</span></p>
+                        <p>Acertos de 6 números: <span class="match-count-6">${acertos6}</span></p>
+                        <p>Acertos de 7 números: <span class="match-count-7">${acertos7}</span></p>
+                    </div>
+                    
+                    <div class="export-date">
+                        Exportado em: ${new Date().toLocaleString()}
+                    </div>
+                </body>
+                </html>
+                `;
+                
+                // Criar um objeto Blob com o conteúdo HTML
+                const blob = new Blob([htmlContent], { type: 'text/html' });
+                
+                // Criar um link para download e simular um clique
+                const link = document.createElement('a');
+                link.href = URL.createObjectURL(blob);
+                link.download = fileName;
+                link.style.display = 'none';
+                document.body.appendChild(link);
+                link.click();
+                document.body.removeChild(link);
+                
+                console.log("Exportação para HTML concluída:", fileName);
+            } catch (error) {
+                console.error("Erro ao exportar para HTML:", error);
+                alert("Ocorreu um erro ao exportar os dados para HTML: " + error.message);
+            }
+        }
+        
+        // Configurar botões e eventos após o carregamento da página
         document.addEventListener('DOMContentLoaded', function() {
             const showFreqBtn = document.getElementById('show-freq-btn');
             const frequencyStats = document.getElementById('frequency-stats');
             const frequencyContent = document.getElementById('frequency-content');
+            
+            // NOVO: Botões para exportar histórico
+            const exportHistoryBtn = document.getElementById('export-history-btn');
+            const exportOptions = document.getElementById('export-options');
+            const exportExcelBtn = document.getElementById('export-excel-btn');
+            const exportHtmlBtn = document.getElementById('export-html-btn');
             
             // Adicionar o evento de clique ao botão de frequência
             if (showFreqBtn) {
@@ -1336,6 +1691,9 @@
                         frequencyContent.innerHTML = exibirEstatisticasFrequencia();
                         frequencyStats.classList.remove('hidden');
                         showFreqBtn.textContent = 'Ocultar Frequência';
+                        
+                        // Esconder opções de exportação
+                        exportOptions.classList.add('hidden');
                     } else {
                         frequencyStats.classList.add('hidden');
                         showFreqBtn.innerHTML = `
@@ -1347,6 +1705,43 @@
                             Frequência`;
                     }
                 });
+            }
+            
+            // NOVO: Adicionar evento de clique ao botão de exportar histórico
+            if (exportHistoryBtn) {
+                exportHistoryBtn.addEventListener('click', function() {
+                    // Alternar visibilidade das opções de exportação
+                    if (exportOptions.classList.contains('hidden')) {
+                        exportOptions.classList.remove('hidden');
+                        exportHistoryBtn.textContent = 'Ocultar Exportação';
+                        
+                        // Esconder estatísticas de frequência
+                        frequencyStats.classList.add('hidden');
+                        showFreqBtn.innerHTML = `
+                            <svg xmlns="http://www.w3.org/2000/svg" class="h-3 w-3" viewBox="0 0 20 20" fill="currentColor">
+                                <path d="M2 11a1 1 0 011-1h2a1 1 0 011 1v5a1 1 0 01-1 1H3a1 1 0 01-1-1v-5z" />
+                                <path d="M8 7a1 1 0 011-1h2a1 1 0 011 1v9a1 1 0 01-1 1H9a1 1 0 01-1-1V7z" />
+                                <path d="M14 4a1 1 0 011-1h2a1 1 0 011 1v12a1 1 0 01-1 1h-2a1 1 0 01-1-1V4z" />
+                            </svg>
+                            Frequência`;
+                    } else {
+                        exportOptions.classList.add('hidden');
+                        exportHistoryBtn.innerHTML = `
+                            <svg xmlns="http://www.w3.org/2000/svg" class="h-3 w-3" viewBox="0 0 20 20" fill="currentColor">
+                                <path fill-rule="evenodd" d="M3 17a1 1 0 011-1h12a1 1 0 110 2H4a1 1 0 01-1-1zm3.293-7.707a1 1 0 011.414 0L9 10.586V3a1 1 0 112 0v7.586l1.293-1.293a1 1 0 111.414 1.414l-3 3a1 1 0 01-1.414 0l-3-3a1 1 0 010-1.414z" clip-rule="evenodd" />
+                            </svg>
+                            Exportar`;
+                    }
+                });
+            }
+            
+            // NOVO: Adicionar eventos de clique aos botões de exportação
+            if (exportExcelBtn) {
+                exportExcelBtn.addEventListener('click', exportToExcel);
+            }
+            
+            if (exportHtmlBtn) {
+                exportHtmlBtn.addEventListener('click', exportToHTML);
             }
             
             // Carregar histórico de acertos visualmente se existir
@@ -1647,6 +2042,17 @@
         .winner-highlight {
             animation: highlight 0.5s ease infinite;
             box-shadow: 0 0 10px rgba(16, 185, 129, 0.7);
+        }
+        
+        /* Nova animação de flash para destacar acertos */
+        @keyframes flash {
+            0% { transform: scale(1); opacity: 1; }
+            50% { transform: scale(1.3); opacity: 1; color: #ef4444; }
+            100% { transform: scale(1); opacity: 1; }
+        }
+        
+        .flash-highlight {
+            animation: flash 0.5s ease-in-out;
         }
         
         #match-counter {
