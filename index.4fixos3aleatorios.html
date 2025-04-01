@@ -27,7 +27,7 @@
     <div class="container mx-auto px-4 py-8">
         <h1 class="text-3xl font-bold text-center text-gray-800 dark:text-white mb-8">Dia da Sorte - Conferidor Automático (1+ Palpite Manual)</h1>
         <hr />
-        <p><a href="index.4fixos3aleatorios.html" target="_blank">(4 Palpites fixos e 3 automático)</a></p>
+        <p><a href="index.html" target="_blank">Voltar</a></p>
 
 
 
@@ -78,7 +78,29 @@
             </div>
             
             <div class="mb-6">
-                <h3 class="text-md font-medium text-gray-700 dark:text-gray-300 mb-3">Digite seus palpites:</h3>
+                <h3 class="text-md font-medium text-gray-700 dark:text-gray-300 mb-3">Números fixos para todos os palpites:</h3>
+                
+                <!-- Seção de números fixos (4 números) -->
+                <div class="bg-blue-50 dark:bg-blue-900/20 p-3 rounded-lg border border-blue-200 dark:border-blue-800 mb-4">
+                    <div class="mb-2">
+                        <label class="text-sm font-medium text-blue-800 dark:text-blue-300">Escolha 4 números fixos para todos os palpites:</label>
+                    </div>
+                    <div class="grid grid-cols-4 gap-3 mb-3">
+                        <input type="number" min="1" max="31" id="fixed-number-1" class="fixed-number-input bg-white dark:bg-gray-700 border border-blue-300 dark:border-blue-600 rounded-md text-center h-12 text-base font-bold text-gray-800 dark:text-white" placeholder="1">
+                        <input type="number" min="1" max="31" id="fixed-number-2" class="fixed-number-input bg-white dark:bg-gray-700 border border-blue-300 dark:border-blue-600 rounded-md text-center h-12 text-base font-bold text-gray-800 dark:text-white" placeholder="2">
+                        <input type="number" min="1" max="31" id="fixed-number-3" class="fixed-number-input bg-white dark:bg-gray-700 border border-blue-300 dark:border-blue-600 rounded-md text-center h-12 text-base font-bold text-gray-800 dark:text-white" placeholder="3">
+                        <input type="number" min="1" max="31" id="fixed-number-4" class="fixed-number-input bg-white dark:bg-gray-700 border border-blue-300 dark:border-blue-600 rounded-md text-center h-12 text-base font-bold text-gray-800 dark:text-white" placeholder="4">
+                    </div>
+                    <div class="flex gap-2">
+                        <button id="apply-fixed-numbers" class="flex-1 py-2 px-4 bg-blue-600 hover:bg-blue-700 text-white font-medium rounded-md transition-colors duration-200 flex items-center justify-center">
+                            <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 mr-2" viewBox="0 0 20 20" fill="currentColor">
+                                <path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd" />
+                            </svg>
+                            Aplicar números fixos
+                        </button>
+                    </div>
+                    <div id="fixed-numbers-error" class="mt-2 text-sm text-red-500 hidden"></div>
+                </div>
                 
                 <!-- Navegação pelos conjuntos de palpites -->
                 <div class="flex justify-between items-center mb-4">
@@ -109,13 +131,15 @@
                         <div class="flex items-center gap-3">
                             <div class="flex-1">
                                 <div class="manual-input-container grid grid-cols-7 gap-2 w-full" data-palpite-id="1">
-                                    <input type="number" min="1" max="31" class="manual-number-input bg-gray-100 dark:bg-gray-700 border border-gray-300 dark:border-gray-600 rounded-md text-center h-10 text-sm font-medium text-gray-800 dark:text-white" placeholder="1">
-                                    <input type="number" min="1" max="31" class="manual-number-input bg-gray-100 dark:bg-gray-700 border border-gray-300 dark:border-gray-600 rounded-md text-center h-10 text-sm font-medium text-gray-800 dark:text-white" placeholder="2">
-                                    <input type="number" min="1" max="31" class="manual-number-input bg-gray-100 dark:bg-gray-700 border border-gray-300 dark:border-gray-600 rounded-md text-center h-10 text-sm font-medium text-gray-800 dark:text-white" placeholder="3">
-                                    <input type="number" min="1" max="31" class="manual-number-input bg-gray-100 dark:bg-gray-700 border border-gray-300 dark:border-gray-600 rounded-md text-center h-10 text-sm font-medium text-gray-800 dark:text-white" placeholder="4">
-                                    <input type="number" min="1" max="31" class="manual-number-input bg-gray-100 dark:bg-gray-700 border border-gray-300 dark:border-gray-600 rounded-md text-center h-10 text-sm font-medium text-gray-800 dark:text-white" placeholder="5">
-                                    <input type="number" min="1" max="31" class="manual-number-input bg-gray-100 dark:bg-gray-700 border border-gray-300 dark:border-gray-600 rounded-md text-center h-10 text-sm font-medium text-gray-800 dark:text-white" placeholder="6">
-                                    <input type="number" min="1" max="31" class="manual-number-input bg-gray-100 dark:bg-gray-700 border border-gray-300 dark:border-gray-600 rounded-md text-center h-10 text-sm font-medium text-gray-800 dark:text-white" placeholder="7">
+                                    <!-- 4 números fixos (readonly) -->
+                                    <input type="number" min="1" max="31" class="fixed-number-display bg-gray-100 dark:bg-gray-700 border border-gray-300 dark:border-gray-600 rounded-md text-center h-10 text-sm font-medium text-gray-800 dark:text-white" readonly>
+                                    <input type="number" min="1" max="31" class="fixed-number-display bg-gray-100 dark:bg-gray-700 border border-gray-300 dark:border-gray-600 rounded-md text-center h-10 text-sm font-medium text-gray-800 dark:text-white" readonly>
+                                    <input type="number" min="1" max="31" class="fixed-number-display bg-gray-100 dark:bg-gray-700 border border-gray-300 dark:border-gray-600 rounded-md text-center h-10 text-sm font-medium text-gray-800 dark:text-white" readonly>
+                                    <input type="number" min="1" max="31" class="fixed-number-display bg-gray-100 dark:bg-gray-700 border border-gray-300 dark:border-gray-600 rounded-md text-center h-10 text-sm font-medium text-gray-800 dark:text-white" readonly>
+                                    <!-- 3 números automáticos -->
+                                    <div class="auto-number-box bg-gray-200 dark:bg-gray-600 border border-gray-300 dark:border-gray-700 rounded-md flex items-center justify-center h-10 text-sm font-medium text-gray-600 dark:text-gray-300">Auto</div>
+                                    <div class="auto-number-box bg-gray-200 dark:bg-gray-600 border border-gray-300 dark:border-gray-700 rounded-md flex items-center justify-center h-10 text-sm font-medium text-gray-600 dark:text-gray-300">Auto</div>
+                                    <div class="auto-number-box bg-gray-200 dark:bg-gray-600 border border-gray-300 dark:border-gray-700 rounded-md flex items-center justify-center h-10 text-sm font-medium text-gray-600 dark:text-gray-300">Auto</div>
                                 </div>
                             </div>
                             <div class="w-16">
@@ -133,13 +157,15 @@
                         <div class="flex items-center gap-3">
                             <div class="flex-1">
                                 <div class="manual-input-container grid grid-cols-7 gap-2 w-full" data-palpite-id="2">
-                                    <input type="number" min="1" max="31" class="manual-number-input bg-gray-100 dark:bg-gray-700 border border-gray-300 dark:border-gray-600 rounded-md text-center h-10 text-sm font-medium text-gray-800 dark:text-white" placeholder="1">
-                                    <input type="number" min="1" max="31" class="manual-number-input bg-gray-100 dark:bg-gray-700 border border-gray-300 dark:border-gray-600 rounded-md text-center h-10 text-sm font-medium text-gray-800 dark:text-white" placeholder="2">
-                                    <input type="number" min="1" max="31" class="manual-number-input bg-gray-100 dark:bg-gray-700 border border-gray-300 dark:border-gray-600 rounded-md text-center h-10 text-sm font-medium text-gray-800 dark:text-white" placeholder="3">
-                                    <input type="number" min="1" max="31" class="manual-number-input bg-gray-100 dark:bg-gray-700 border border-gray-300 dark:border-gray-600 rounded-md text-center h-10 text-sm font-medium text-gray-800 dark:text-white" placeholder="4">
-                                    <input type="number" min="1" max="31" class="manual-number-input bg-gray-100 dark:bg-gray-700 border border-gray-300 dark:border-gray-600 rounded-md text-center h-10 text-sm font-medium text-gray-800 dark:text-white" placeholder="5">
-                                    <input type="number" min="1" max="31" class="manual-number-input bg-gray-100 dark:bg-gray-700 border border-gray-300 dark:border-gray-600 rounded-md text-center h-10 text-sm font-medium text-gray-800 dark:text-white" placeholder="6">
-                                    <input type="number" min="1" max="31" class="manual-number-input bg-gray-100 dark:bg-gray-700 border border-gray-300 dark:border-gray-600 rounded-md text-center h-10 text-sm font-medium text-gray-800 dark:text-white" placeholder="7">
+                                    <!-- 4 números fixos (readonly) -->
+                                    <input type="number" min="1" max="31" class="fixed-number-display bg-gray-100 dark:bg-gray-700 border border-gray-300 dark:border-gray-600 rounded-md text-center h-10 text-sm font-medium text-gray-800 dark:text-white" readonly>
+                                    <input type="number" min="1" max="31" class="fixed-number-display bg-gray-100 dark:bg-gray-700 border border-gray-300 dark:border-gray-600 rounded-md text-center h-10 text-sm font-medium text-gray-800 dark:text-white" readonly>
+                                    <input type="number" min="1" max="31" class="fixed-number-display bg-gray-100 dark:bg-gray-700 border border-gray-300 dark:border-gray-600 rounded-md text-center h-10 text-sm font-medium text-gray-800 dark:text-white" readonly>
+                                    <input type="number" min="1" max="31" class="fixed-number-display bg-gray-100 dark:bg-gray-700 border border-gray-300 dark:border-gray-600 rounded-md text-center h-10 text-sm font-medium text-gray-800 dark:text-white" readonly>
+                                    <!-- 3 números automáticos -->
+                                    <div class="auto-number-box bg-gray-200 dark:bg-gray-600 border border-gray-300 dark:border-gray-700 rounded-md flex items-center justify-center h-10 text-sm font-medium text-gray-600 dark:text-gray-300">Auto</div>
+                                    <div class="auto-number-box bg-gray-200 dark:bg-gray-600 border border-gray-300 dark:border-gray-700 rounded-md flex items-center justify-center h-10 text-sm font-medium text-gray-600 dark:text-gray-300">Auto</div>
+                                    <div class="auto-number-box bg-gray-200 dark:bg-gray-600 border border-gray-300 dark:border-gray-700 rounded-md flex items-center justify-center h-10 text-sm font-medium text-gray-600 dark:text-gray-300">Auto</div>
                                 </div>
                             </div>
                             <div class="w-16">
@@ -148,7 +174,6 @@
                         </div>
                     </div>
                     
-                    <!-- Remaining palpite sections (3-5) follow the same pattern... -->
                     <!-- Palpite 3 -->
                     <div class="palpite-group mb-4 p-3 rounded-lg border border-gray-200 dark:border-gray-700">
                         <div class="flex items-center justify-between mb-2">
@@ -158,13 +183,15 @@
                         <div class="flex items-center gap-3">
                             <div class="flex-1">
                                 <div class="manual-input-container grid grid-cols-7 gap-2 w-full" data-palpite-id="3">
-                                    <input type="number" min="1" max="31" class="manual-number-input bg-gray-100 dark:bg-gray-700 border border-gray-300 dark:border-gray-600 rounded-md text-center h-10 text-sm font-medium text-gray-800 dark:text-white" placeholder="1">
-                                    <input type="number" min="1" max="31" class="manual-number-input bg-gray-100 dark:bg-gray-700 border border-gray-300 dark:border-gray-600 rounded-md text-center h-10 text-sm font-medium text-gray-800 dark:text-white" placeholder="2">
-                                    <input type="number" min="1" max="31" class="manual-number-input bg-gray-100 dark:bg-gray-700 border border-gray-300 dark:border-gray-600 rounded-md text-center h-10 text-sm font-medium text-gray-800 dark:text-white" placeholder="3">
-                                    <input type="number" min="1" max="31" class="manual-number-input bg-gray-100 dark:bg-gray-700 border border-gray-300 dark:border-gray-600 rounded-md text-center h-10 text-sm font-medium text-gray-800 dark:text-white" placeholder="4">
-                                    <input type="number" min="1" max="31" class="manual-number-input bg-gray-100 dark:bg-gray-700 border border-gray-300 dark:border-gray-600 rounded-md text-center h-10 text-sm font-medium text-gray-800 dark:text-white" placeholder="5">
-                                    <input type="number" min="1" max="31" class="manual-number-input bg-gray-100 dark:bg-gray-700 border border-gray-300 dark:border-gray-600 rounded-md text-center h-10 text-sm font-medium text-gray-800 dark:text-white" placeholder="6">
-                                    <input type="number" min="1" max="31" class="manual-number-input bg-gray-100 dark:bg-gray-700 border border-gray-300 dark:border-gray-600 rounded-md text-center h-10 text-sm font-medium text-gray-800 dark:text-white" placeholder="7">
+                                    <!-- 4 números fixos (readonly) -->
+                                    <input type="number" min="1" max="31" class="fixed-number-display bg-gray-100 dark:bg-gray-700 border border-gray-300 dark:border-gray-600 rounded-md text-center h-10 text-sm font-medium text-gray-800 dark:text-white" readonly>
+                                    <input type="number" min="1" max="31" class="fixed-number-display bg-gray-100 dark:bg-gray-700 border border-gray-300 dark:border-gray-600 rounded-md text-center h-10 text-sm font-medium text-gray-800 dark:text-white" readonly>
+                                    <input type="number" min="1" max="31" class="fixed-number-display bg-gray-100 dark:bg-gray-700 border border-gray-300 dark:border-gray-600 rounded-md text-center h-10 text-sm font-medium text-gray-800 dark:text-white" readonly>
+                                    <input type="number" min="1" max="31" class="fixed-number-display bg-gray-100 dark:bg-gray-700 border border-gray-300 dark:border-gray-600 rounded-md text-center h-10 text-sm font-medium text-gray-800 dark:text-white" readonly>
+                                    <!-- 3 números automáticos -->
+                                    <div class="auto-number-box bg-gray-200 dark:bg-gray-600 border border-gray-300 dark:border-gray-700 rounded-md flex items-center justify-center h-10 text-sm font-medium text-gray-600 dark:text-gray-300">Auto</div>
+                                    <div class="auto-number-box bg-gray-200 dark:bg-gray-600 border border-gray-300 dark:border-gray-700 rounded-md flex items-center justify-center h-10 text-sm font-medium text-gray-600 dark:text-gray-300">Auto</div>
+                                    <div class="auto-number-box bg-gray-200 dark:bg-gray-600 border border-gray-300 dark:border-gray-700 rounded-md flex items-center justify-center h-10 text-sm font-medium text-gray-600 dark:text-gray-300">Auto</div>
                                 </div>
                             </div>
                             <div class="w-16">
@@ -182,13 +209,15 @@
                         <div class="flex items-center gap-3">
                             <div class="flex-1">
                                 <div class="manual-input-container grid grid-cols-7 gap-2 w-full" data-palpite-id="4">
-                                    <input type="number" min="1" max="31" class="manual-number-input bg-gray-100 dark:bg-gray-700 border border-gray-300 dark:border-gray-600 rounded-md text-center h-10 text-sm font-medium text-gray-800 dark:text-white" placeholder="1">
-                                    <input type="number" min="1" max="31" class="manual-number-input bg-gray-100 dark:bg-gray-700 border border-gray-300 dark:border-gray-600 rounded-md text-center h-10 text-sm font-medium text-gray-800 dark:text-white" placeholder="2">
-                                    <input type="number" min="1" max="31" class="manual-number-input bg-gray-100 dark:bg-gray-700 border border-gray-300 dark:border-gray-600 rounded-md text-center h-10 text-sm font-medium text-gray-800 dark:text-white" placeholder="3">
-                                    <input type="number" min="1" max="31" class="manual-number-input bg-gray-100 dark:bg-gray-700 border border-gray-300 dark:border-gray-600 rounded-md text-center h-10 text-sm font-medium text-gray-800 dark:text-white" placeholder="4">
-                                    <input type="number" min="1" max="31" class="manual-number-input bg-gray-100 dark:bg-gray-700 border border-gray-300 dark:border-gray-600 rounded-md text-center h-10 text-sm font-medium text-gray-800 dark:text-white" placeholder="5">
-                                    <input type="number" min="1" max="31" class="manual-number-input bg-gray-100 dark:bg-gray-700 border border-gray-300 dark:border-gray-600 rounded-md text-center h-10 text-sm font-medium text-gray-800 dark:text-white" placeholder="6">
-                                    <input type="number" min="1" max="31" class="manual-number-input bg-gray-100 dark:bg-gray-700 border border-gray-300 dark:border-gray-600 rounded-md text-center h-10 text-sm font-medium text-gray-800 dark:text-white" placeholder="7">
+                                    <!-- 4 números fixos (readonly) -->
+                                    <input type="number" min="1" max="31" class="fixed-number-display bg-gray-100 dark:bg-gray-700 border border-gray-300 dark:border-gray-600 rounded-md text-center h-10 text-sm font-medium text-gray-800 dark:text-white" readonly>
+                                    <input type="number" min="1" max="31" class="fixed-number-display bg-gray-100 dark:bg-gray-700 border border-gray-300 dark:border-gray-600 rounded-md text-center h-10 text-sm font-medium text-gray-800 dark:text-white" readonly>
+                                    <input type="number" min="1" max="31" class="fixed-number-display bg-gray-100 dark:bg-gray-700 border border-gray-300 dark:border-gray-600 rounded-md text-center h-10 text-sm font-medium text-gray-800 dark:text-white" readonly>
+                                    <input type="number" min="1" max="31" class="fixed-number-display bg-gray-100 dark:bg-gray-700 border border-gray-300 dark:border-gray-600 rounded-md text-center h-10 text-sm font-medium text-gray-800 dark:text-white" readonly>
+                                    <!-- 3 números automáticos -->
+                                    <div class="auto-number-box bg-gray-200 dark:bg-gray-600 border border-gray-300 dark:border-gray-700 rounded-md flex items-center justify-center h-10 text-sm font-medium text-gray-600 dark:text-gray-300">Auto</div>
+                                    <div class="auto-number-box bg-gray-200 dark:bg-gray-600 border border-gray-300 dark:border-gray-700 rounded-md flex items-center justify-center h-10 text-sm font-medium text-gray-600 dark:text-gray-300">Auto</div>
+                                    <div class="auto-number-box bg-gray-200 dark:bg-gray-600 border border-gray-300 dark:border-gray-700 rounded-md flex items-center justify-center h-10 text-sm font-medium text-gray-600 dark:text-gray-300">Auto</div>
                                 </div>
                             </div>
                             <div class="w-16">
@@ -206,13 +235,15 @@
                         <div class="flex items-center gap-3">
                             <div class="flex-1">
                                 <div class="manual-input-container grid grid-cols-7 gap-2 w-full" data-palpite-id="5">
-                                    <input type="number" min="1" max="31" class="manual-number-input bg-gray-100 dark:bg-gray-700 border border-gray-300 dark:border-gray-600 rounded-md text-center h-10 text-sm font-medium text-gray-800 dark:text-white" placeholder="1">
-                                    <input type="number" min="1" max="31" class="manual-number-input bg-gray-100 dark:bg-gray-700 border border-gray-300 dark:border-gray-600 rounded-md text-center h-10 text-sm font-medium text-gray-800 dark:text-white" placeholder="2">
-                                    <input type="number" min="1" max="31" class="manual-number-input bg-gray-100 dark:bg-gray-700 border border-gray-300 dark:border-gray-600 rounded-md text-center h-10 text-sm font-medium text-gray-800 dark:text-white" placeholder="3">
-                                    <input type="number" min="1" max="31" class="manual-number-input bg-gray-100 dark:bg-gray-700 border border-gray-300 dark:border-gray-600 rounded-md text-center h-10 text-sm font-medium text-gray-800 dark:text-white" placeholder="4">
-                                    <input type="number" min="1" max="31" class="manual-number-input bg-gray-100 dark:bg-gray-700 border border-gray-300 dark:border-gray-600 rounded-md text-center h-10 text-sm font-medium text-gray-800 dark:text-white" placeholder="5">
-                                    <input type="number" min="1" max="31" class="manual-number-input bg-gray-100 dark:bg-gray-700 border border-gray-300 dark:border-gray-600 rounded-md text-center h-10 text-sm font-medium text-gray-800 dark:text-white" placeholder="6">
-                                    <input type="number" min="1" max="31" class="manual-number-input bg-gray-100 dark:bg-gray-700 border border-gray-300 dark:border-gray-600 rounded-md text-center h-10 text-sm font-medium text-gray-800 dark:text-white" placeholder="7">
+                                    <!-- 4 números fixos (readonly) -->
+                                    <input type="number" min="1" max="31" class="fixed-number-display bg-gray-100 dark:bg-gray-700 border border-gray-300 dark:border-gray-600 rounded-md text-center h-10 text-sm font-medium text-gray-800 dark:text-white" readonly>
+                                    <input type="number" min="1" max="31" class="fixed-number-display bg-gray-100 dark:bg-gray-700 border border-gray-300 dark:border-gray-600 rounded-md text-center h-10 text-sm font-medium text-gray-800 dark:text-white" readonly>
+                                    <input type="number" min="1" max="31" class="fixed-number-display bg-gray-100 dark:bg-gray-700 border border-gray-300 dark:border-gray-600 rounded-md text-center h-10 text-sm font-medium text-gray-800 dark:text-white" readonly>
+                                    <input type="number" min="1" max="31" class="fixed-number-display bg-gray-100 dark:bg-gray-700 border border-gray-300 dark:border-gray-600 rounded-md text-center h-10 text-sm font-medium text-gray-800 dark:text-white" readonly>
+                                    <!-- 3 números automáticos -->
+                                    <div class="auto-number-box bg-gray-200 dark:bg-gray-600 border border-gray-300 dark:border-gray-700 rounded-md flex items-center justify-center h-10 text-sm font-medium text-gray-600 dark:text-gray-300">Auto</div>
+                                    <div class="auto-number-box bg-gray-200 dark:bg-gray-600 border border-gray-300 dark:border-gray-700 rounded-md flex items-center justify-center h-10 text-sm font-medium text-gray-600 dark:text-gray-300">Auto</div>
+                                    <div class="auto-number-box bg-gray-200 dark:bg-gray-600 border border-gray-300 dark:border-gray-700 rounded-md flex items-center justify-center h-10 text-sm font-medium text-gray-600 dark:text-gray-300">Auto</div>
                                 </div>
                             </div>
                             <div class="w-16">
@@ -224,7 +255,7 @@
                 
                 <!-- Grupo 2 (escondido inicialmente) -->
                 <div id="grupo-palpites-2" class="palpites-grupo hidden">
-                    <!-- Outros palpites (6-10) -->
+                    <!-- Outros palpites (6-10) serão gerados via JavaScript -->
                 </div>
                 
                 <!-- Outros grupos 3-7 com palpites 11-31 serão gerados via JavaScript -->
@@ -234,6 +265,14 @@
                 
                 <div class="mt-3">
                     <div id="error-message" class="text-red-500 text-sm mb-2 hidden"></div>
+                    
+                    <!-- Botão para gerar números automáticos para todos os palpites -->
+                    <button id="generate-auto-all" class="w-full mb-2 py-2 px-4 bg-green-600 hover:bg-green-700 text-white font-medium rounded-md transition-colors duration-200 flex items-center justify-center">
+                        <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 mr-2" viewBox="0 0 20 20" fill="currentColor">
+                            <path fill-rule="evenodd" d="M4 2a1 1 0 011 1v2.101a7.002 7.002 0 0111.601 2.566 1 1 0 11-1.885.666A5.002 5.002 0 005.999 7H9a1 1 0 010 2H4a1 1 0 01-1-1V3a1 1 0 011-1zm.008 9.057a1 1 0 011.276.61A5.002 5.002 0 0014.001 13H11a1 1 0 110-2h5a1 1 0 011 1v5a1 1 0 11-2 0v-2.101a7.002 7.002 0 01-11.601-2.566 1 1 0 01.61-1.276z" clip-rule="evenodd" />
+                        </svg>
+                        Gerar números automáticos para todos os palpites
+                    </button>
                     
                     <!-- Botões para conferência sequencial e em massa -->
                     <div class="flex flex-col gap-2">
@@ -324,7 +363,8 @@
         <div class="max-w-md mx-auto bg-white dark:bg-gray-800 rounded-lg shadow-md p-6">
             <h3 class="text-lg font-semibold text-gray-700 dark:text-gray-200 mb-2">Como funciona</h3>
             <p class="text-gray-600 dark:text-gray-300 mb-2">Clique no botão "Gerar Palpite" para obter 7 números aleatórios entre 1 e 31, sem repetições.</p>
-            <p class="text-gray-600 dark:text-gray-300 mb-2">Para conferir seus palpites, preencha os campos e escolha entre:
+            <p class="text-gray-600 dark:text-gray-300 mb-2">Escolha 4 números fixos e clique em "Aplicar números fixos" para usá-los em todos os 31 palpites. Os outros 3 números de cada palpite serão gerados automaticamente.</p>
+            <p class="text-gray-600 dark:text-gray-300 mb-2">Para conferir seus palpites, preencha os meses e clique em:
             <ul class="list-disc pl-5 text-gray-600 dark:text-gray-300 mb-2">
                 <li><b>Conferir Próximo Palpite</b>: Verifica um palpite por vez</li>
                 <li><b>Conferir Todos</b>: Verifica todos os seus palpites de uma vez</li>
@@ -539,6 +579,9 @@
             "60": "1 minuto"
         };
         
+        // Array para armazenar os números fixos do usuário
+        let fixedNumbersArray = [];
+        
         // Função para tocar o beep
         function playBeep() {
             const beepSound = document.getElementById('beep-sound');
@@ -616,6 +659,8 @@
         // NOVO: Função para resetar o estilo do contador para o padrão (verde)
         function resetMatchCounterStyle() {
             const matchCounter = document.getElementById('match-counter');
+            if (!matchCounter) return;
+            
             // Remover qualquer classe de destaque existente
             matchCounter.classList.remove('text-red-600', 'dark:text-red-400', 'font-bold', 'text-base');
             // Adicionar de volta as classes padrão
@@ -651,6 +696,31 @@
             setTimeout(() => {
                 oscillator.stop();
             }, 400);
+        }
+        
+        // Função para gerar números aleatórios únicos
+        function generateUniqueRandomNumbers(min, max, count, excludeNumbers) {
+            // Conjunto para armazenar números já utilizados
+            const usedNumbers = new Set(excludeNumbers || []);
+            const result = [];
+            
+            // Verificar se é possível gerar a quantidade solicitada de números únicos
+            const availableNumbersCount = (max - min + 1) - usedNumbers.size;
+            if (count > availableNumbersCount) {
+                console.error(`Não é possível gerar ${count} números únicos entre ${min} e ${max} excluindo ${usedNumbers.size} números.`);
+                return result;
+            }
+            
+            // Gerar os números aleatórios
+            while (result.length < count) {
+                const randomNum = Math.floor(Math.random() * (max - min + 1)) + min;
+                if (!usedNumbers.has(randomNum)) {
+                    usedNumbers.add(randomNum);
+                    result.push(randomNum);
+                }
+            }
+            
+            return result;
         }
         
         // Função para registrar números sorteados no histórico
@@ -994,6 +1064,139 @@
             return recordId;
         }
         
+        // Função para gerar 3 números aleatórios para complementar os 4 fixos
+        function generateAutoNumbersForPalpite(palpiteContainer) {
+            if (fixedNumbersArray.length !== 4) {
+                console.error("Os números fixos não foram definidos. Defina 4 números fixos primeiro.");
+                return false;
+            }
+            
+            // Gerar 3 números aleatórios que não colidem com os fixos
+            const randomNumbers = generateUniqueRandomNumbers(1, 31, 3, fixedNumbersArray);
+            
+            // Obter as caixas de números automáticos neste palpite
+            const autoNumberBoxes = palpiteContainer.querySelectorAll('.auto-number-box');
+            
+            // Atualizar os números aleatórios nas caixas
+            autoNumberBoxes.forEach((box, index) => {
+                box.textContent = randomNumbers[index];
+                
+                // Destacar visualmente com classe de animação
+                box.classList.add('pop-in');
+                setTimeout(() => {
+                    box.classList.remove('pop-in');
+                }, 300);
+            });
+            
+            return true;
+        }
+        
+        // Função para gerar números automáticos para todos os palpites
+        function generateAutoNumbersForAllPalpites() {
+            if (fixedNumbersArray.length !== 4) {
+                // Mostrar alerta para o usuário
+                const errorElement = document.getElementById('fixed-numbers-error');
+                errorElement.textContent = "Por favor, defina os 4 números fixos primeiro.";
+                errorElement.classList.remove('hidden');
+                setTimeout(() => {
+                    errorElement.classList.add('hidden');
+                }, 3000);
+                return false;
+            }
+            
+            // Obter todos os containers de palpites
+            const allContainers = document.querySelectorAll('.manual-input-container');
+            
+            // Para cada container, gerar novos números aleatórios
+            allContainers.forEach(container => {
+                generateAutoNumbersForPalpite(container);
+            });
+            
+            return true;
+        }
+        
+        // Função para aplicar os números fixos em todos os palpites
+        function applyFixedNumbers() {
+            // Obter os valores dos campos de entrada de números fixos
+            const fixedInputs = document.querySelectorAll('.fixed-number-input');
+            const fixedNumbers = [];
+            let allFilled = true;
+            let hasUnique = true;
+            
+            // Coletar os números e verificar se todos estão preenchidos
+            fixedInputs.forEach(input => {
+                if (!input.value) {
+                    allFilled = false;
+                } else {
+                    const num = parseInt(input.value);
+                    fixedNumbers.push(num);
+                }
+            });
+            
+            // Verificar se todos os campos estão preenchidos
+            if (!allFilled) {
+                const errorElement = document.getElementById('fixed-numbers-error');
+                errorElement.textContent = "Por favor, preencha todos os 4 números fixos.";
+                errorElement.classList.remove('hidden');
+                setTimeout(() => {
+                    errorElement.classList.add('hidden');
+                }, 3000);
+                return false;
+            }
+            
+            // Verificar se todos os números estão entre 1 e 31
+            const validRange = fixedNumbers.every(num => num >= 1 && num <= 31);
+            if (!validRange) {
+                const errorElement = document.getElementById('fixed-numbers-error');
+                errorElement.textContent = "Todos os números devem estar entre 1 e 31.";
+                errorElement.classList.remove('hidden');
+                setTimeout(() => {
+                    errorElement.classList.add('hidden');
+                }, 3000);
+                return false;
+            }
+            
+            // Verificar se há números repetidos
+            const uniqueNumbers = new Set(fixedNumbers);
+            if (uniqueNumbers.size !== 4) {
+                const errorElement = document.getElementById('fixed-numbers-error');
+                errorElement.textContent = "Os números fixos não podem se repetir.";
+                errorElement.classList.remove('hidden');
+                setTimeout(() => {
+                    errorElement.classList.add('hidden');
+                }, 3000);
+                return false;
+            }
+            
+            // Armazenar os números fixos na variável global
+            fixedNumbersArray = [...fixedNumbers];
+            
+            // Obter todos os elementos de exibição de números fixos
+            const fixedDisplays = document.querySelectorAll('.fixed-number-display');
+            
+            // Atualizar todos os elementos de exibição com os números fixos
+            fixedDisplays.forEach((display, index) => {
+                const fixedIndex = index % 4; // Para garantir que apenas os 4 primeiros inputs sejam atualizados
+                display.value = fixedNumbers[fixedIndex];
+                
+                // Destacar visualmente a atualização
+                display.classList.add('bg-blue-50');
+                display.classList.add('dark:bg-blue-900/30');
+                display.classList.add('border-blue-300');
+                display.classList.add('dark:border-blue-600');
+                
+                setTimeout(() => {
+                    display.classList.remove('bg-blue-50');
+                    display.classList.remove('dark:bg-blue-900/30');
+                }, 1000);
+            });
+            
+            // Gerar os números aleatórios para cada palpite
+            generateAutoNumbersForAllPalpites();
+            
+            return true;
+        }
+        
         // Função para coletar todos os palpites disponíveis
         function getAllPalpites() {
             const todosPalpites = [];
@@ -1046,12 +1249,21 @@
                 }
                 
                 // Limpar os estilos dos inputs (números)
-                const inputs = palpite.querySelectorAll('.manual-number-input');
+                const inputs = palpite.querySelectorAll('.fixed-number-display');
                 inputs.forEach(input => {
                     input.style.backgroundColor = "";
                     input.style.color = "";
                     input.style.fontWeight = "";
                     input.style.borderColor = "";
+                });
+                
+                // Limpar os estilos das caixas automáticas
+                const autoBoxes = palpite.querySelectorAll('.auto-number-box');
+                autoBoxes.forEach(box => {
+                    box.style.backgroundColor = "";
+                    box.style.color = "";
+                    box.style.fontWeight = "";
+                    box.style.borderColor = "";
                 });
                 
                 // Limpar o estilo do mês
@@ -1069,6 +1281,29 @@
             document.getElementById('resumo-acertos').classList.add('hidden');
             document.getElementById('palpite-vencedor').classList.add('hidden');
             document.getElementById('error-message').classList.add('hidden');
+        }
+        
+        // Função para obter os números de um palpite (fixos + automáticos)
+        function getPalpiteNumbers(palpiteGroup) {
+            const palpiteNumbers = [];
+            
+            // Obter os números fixos
+            const fixedInputs = palpiteGroup.querySelectorAll('.fixed-number-display');
+            fixedInputs.forEach(input => {
+                if (input.value) {
+                    palpiteNumbers.push(parseInt(input.value));
+                }
+            });
+            
+            // Obter os números automáticos
+            const autoBoxes = palpiteGroup.querySelectorAll('.auto-number-box');
+            autoBoxes.forEach(box => {
+                if (box.textContent !== 'Auto') {
+                    palpiteNumbers.push(parseInt(box.textContent));
+                }
+            });
+            
+            return palpiteNumbers;
         }
         
         // Função para verificar um único palpite
@@ -1099,66 +1334,24 @@
             const inputContainer = palpiteGroup.querySelector('.manual-input-container');
             if (!inputContainer) return { success: false, message: "Container inválido" };
             
-            const inputs = inputContainer.querySelectorAll('.manual-number-input');
             const monthInput = palpiteGroup.querySelector('.month-input');
             const statusElement = palpiteGroup.querySelector('.palpite-status');
             const palpiteId = palpiteGroup.getAttribute('data-palpite-id') || numberIndex;
             
-            // Verificar se pelo menos um número está preenchido para este palpite
-            let algumNumeroPreenchido = false;
-            inputs.forEach(input => {
-                if (input.value) {
-                    algumNumeroPreenchido = true;
-                }
-            });
+            // Verificar se os números fixos e automáticos estão preenchidos
+            const palpiteNumbers = getPalpiteNumbers(palpiteGroup);
             
-            // Se nenhum número ou mês preenchido, pular este palpite
-            if (!algumNumeroPreenchido && !monthInput.value) {
-                return { success: false, message: "Palpite vazio" };
-            }
-            
-            // Se apenas algumas entradas preenchidas, verificar se todas estão preenchidas
-            let numerosCompletos = true;
-            const palpiteNumbers = [];
-            
-            // Verificar todos os 7 números e limpar estilos anteriores
-            inputs.forEach(input => {
-                // Limpar estilos anteriores
-                input.style.backgroundColor = "";
-                input.style.color = "";
-                input.style.fontWeight = "";
-                input.style.borderColor = "";
-                
-                if (!input.value && algumNumeroPreenchido) {
-                    numerosCompletos = false;
-                } else if (algumNumeroPreenchido) {
-                    palpiteNumbers.push(parseInt(input.value));
-                }
-            });
-            
-            // Limpar estilos do mês
-            monthInput.style.backgroundColor = "";
-            monthInput.style.color = "";
-            monthInput.style.fontWeight = "";
-            monthInput.style.borderColor = "";
-            
-            // Verificar o mês
-            let mesCompleto = true;
-            let palpiteMonth = null;
-            if (!monthInput.value && algumNumeroPreenchido) {
-                mesCompleto = false;
-            } else if (algumNumeroPreenchido) {
-                palpiteMonth = parseInt(monthInput.value);
-                if (palpiteMonth < 1 || palpiteMonth > 12) {
-                    mesCompleto = false;
-                }
-            }
-            
-            // Se algum dado estiver faltando, marque como incompleto
-            if (!numerosCompletos || !mesCompleto) {
-                statusElement.textContent = "Incompleto";
-                statusElement.classList.add('text-red-500');
+            // Se não tiver números suficientes ou mês preenchido, pular
+            if (palpiteNumbers.length !== 7 || !monthInput.value) {
                 return { success: false, message: "Palpite incompleto" };
+            }
+            
+            // Verificar se o mês está dentro do intervalo válido
+            const palpiteMonth = parseInt(monthInput.value);
+            if (palpiteMonth < 1 || palpiteMonth > 12) {
+                statusElement.textContent = "Mês inválido";
+                statusElement.classList.add('text-red-500');
+                return { success: false, message: "Mês inválido" };
             }
             
             // Verificar se há números repetidos no palpite
@@ -1174,15 +1367,44 @@
             let monthMatch = false;
             const matchedNumbers = [];
             
-            // Verificar cada número do palpite e destacar os acertos DENTRO DO PALPITE
-            inputs.forEach((input, index) => {
-                const num = parseInt(input.value);
+            // Limpar estilos anteriores dos números fixos
+            const fixedInputs = palpiteGroup.querySelectorAll('.fixed-number-display');
+            fixedInputs.forEach(input => {
+                input.style.backgroundColor = "";
+                input.style.color = "";
+                input.style.fontWeight = "";
+                input.style.borderColor = "";
+            });
+            
+            // Limpar estilos anteriores dos números automáticos
+            const autoBoxes = palpiteGroup.querySelectorAll('.auto-number-box');
+            autoBoxes.forEach(box => {
+                box.style.backgroundColor = "";
+                box.style.color = "";
+                box.style.fontWeight = "";
+                box.style.borderColor = "";
+            });
+            
+            // Verificar cada número do palpite e destacar os acertos
+            palpiteNumbers.forEach((num, index) => {
                 if (currentBoxNumbers.includes(num)) {
-                    // Destacar visualmente o número acertado no palpite
-                    input.style.backgroundColor = "#10B981"; // Verde
-                    input.style.color = "white";
-                    input.style.fontWeight = "bold";
-                    input.style.borderColor = "#059669";
+                    // Destacar o número fixo ou automático de acordo com o índice
+                    if (index < 4) {
+                        // É um número fixo
+                        const fixedInput = fixedInputs[index];
+                        fixedInput.style.backgroundColor = "#10B981"; // Verde
+                        fixedInput.style.color = "white";
+                        fixedInput.style.fontWeight = "bold";
+                        fixedInput.style.borderColor = "#059669";
+                    } else {
+                        // É um número automático
+                        const autoIndex = index - 4; // Converter para o índice dos números automáticos (0-2)
+                        const autoBox = autoBoxes[autoIndex];
+                        autoBox.style.backgroundColor = "#10B981"; // Verde
+                        autoBox.style.color = "white";
+                        autoBox.style.fontWeight = "bold";
+                        autoBox.style.borderColor = "#059669";
+                    }
                     
                     matchedNumbers.push(num);
                     matchCount++;
@@ -1332,15 +1554,8 @@
                 const monthInput = currentPalpite.querySelector('.month-input');
                 
                 if (inputContainer && monthInput && monthInput.value) {
-                    const inputs = inputContainer.querySelectorAll('.manual-number-input');
-                    const palpiteNums = [];
-                    
                     // Coletar números do palpite
-                    inputs.forEach(input => {
-                        if (input.value) {
-                            palpiteNums.push(parseInt(input.value));
-                        }
-                    });
+                    const palpiteNums = getPalpiteNumbers(currentPalpite);
                     
                     // Identificar acertos
                     const numerosAcertados = palpiteNums.filter(num => numerosSorteados.includes(num));
@@ -1676,162 +1891,6 @@
             }
         }
         
-        // Configurar botões e eventos após o carregamento da página
-        document.addEventListener('DOMContentLoaded', function() {
-            const showFreqBtn = document.getElementById('show-freq-btn');
-            const frequencyStats = document.getElementById('frequency-stats');
-            const frequencyContent = document.getElementById('frequency-content');
-            
-            // NOVO: Botões para exportar histórico
-            const exportHistoryBtn = document.getElementById('export-history-btn');
-            const exportOptions = document.getElementById('export-options');
-            const exportExcelBtn = document.getElementById('export-excel-btn');
-            const exportHtmlBtn = document.getElementById('export-html-btn');
-            
-            // Adicionar o evento de clique ao botão de frequência
-            if (showFreqBtn) {
-                showFreqBtn.addEventListener('click', function() {
-                    // Alternar visibilidade da seção de estatísticas
-                    if (frequencyStats.classList.contains('hidden')) {
-                        // Atualizar o conteúdo com as estatísticas de frequência mais recentes
-                        frequencyContent.innerHTML = exibirEstatisticasFrequencia();
-                        frequencyStats.classList.remove('hidden');
-                        showFreqBtn.textContent = 'Ocultar Frequência';
-                        
-                        // Esconder opções de exportação
-                        exportOptions.classList.add('hidden');
-                    } else {
-                        frequencyStats.classList.add('hidden');
-                        showFreqBtn.innerHTML = `
-                            <svg xmlns="http://www.w3.org/2000/svg" class="h-3 w-3" viewBox="0 0 20 20" fill="currentColor">
-                                <path d="M2 11a1 1 0 011-1h2a1 1 0 011 1v5a1 1 0 01-1 1H3a1 1 0 01-1-1v-5z" />
-                                <path d="M8 7a1 1 0 011-1h2a1 1 0 011 1v9a1 1 0 01-1 1H9a1 1 0 01-1-1V7z" />
-                                <path d="M14 4a1 1 0 011-1h2a1 1 0 011 1v12a1 1 0 01-1 1h-2a1 1 0 01-1-1V4z" />
-                            </svg>
-                            Frequência`;
-                    }
-                });
-            }
-            
-            // NOVO: Adicionar evento de clique ao botão de exportar histórico
-            if (exportHistoryBtn) {
-                exportHistoryBtn.addEventListener('click', function() {
-                    // Alternar visibilidade das opções de exportação
-                    if (exportOptions.classList.contains('hidden')) {
-                        exportOptions.classList.remove('hidden');
-                        exportHistoryBtn.textContent = 'Ocultar Exportação';
-                        
-                        // Esconder estatísticas de frequência
-                        frequencyStats.classList.add('hidden');
-                        showFreqBtn.innerHTML = `
-                            <svg xmlns="http://www.w3.org/2000/svg" class="h-3 w-3" viewBox="0 0 20 20" fill="currentColor">
-                                <path d="M2 11a1 1 0 011-1h2a1 1 0 011 1v5a1 1 0 01-1 1H3a1 1 0 01-1-1v-5z" />
-                                <path d="M8 7a1 1 0 011-1h2a1 1 0 011 1v9a1 1 0 01-1 1H9a1 1 0 01-1-1V7z" />
-                                <path d="M14 4a1 1 0 011-1h2a1 1 0 011 1v12a1 1 0 01-1 1h-2a1 1 0 01-1-1V4z" />
-                            </svg>
-                            Frequência`;
-                    } else {
-                        exportOptions.classList.add('hidden');
-                        exportHistoryBtn.innerHTML = `
-                            <svg xmlns="http://www.w3.org/2000/svg" class="h-3 w-3" viewBox="0 0 20 20" fill="currentColor">
-                                <path fill-rule="evenodd" d="M3 17a1 1 0 011-1h12a1 1 0 110 2H4a1 1 0 01-1-1zm3.293-7.707a1 1 0 011.414 0L9 10.586V3a1 1 0 112 0v7.586l1.293-1.293a1 1 0 111.414 1.414l-3 3a1 1 0 01-1.414 0l-3-3a1 1 0 010-1.414z" clip-rule="evenodd" />
-                            </svg>
-                            Exportar`;
-                    }
-                });
-            }
-            
-            // NOVO: Adicionar eventos de clique aos botões de exportação
-            if (exportExcelBtn) {
-                exportExcelBtn.addEventListener('click', exportToExcel);
-            }
-            
-            if (exportHtmlBtn) {
-                exportHtmlBtn.addEventListener('click', exportToHTML);
-            }
-            
-            // Carregar histórico de acertos visualmente se existir
-            const acertosSalvos = localStorage.getItem('diaDaSorteAcertos');
-            if (acertosSalvos) {
-                const historicos = JSON.parse(acertosSalvos);
-                const grandes = historicos.filter(h => h.matchCount >= 5);
-                
-                if (grandes.length > 0) {
-                    // Exibir os últimos 8 grandes acertos
-                    const ultimos = grandes.slice(-8);
-                    const historyContainer = document.getElementById('history-container');
-                    
-                    // Remover a mensagem padrão
-                    const defaultMsg = historyContainer.querySelector('.text-center.italic');
-                    if (defaultMsg) {
-                        historyContainer.removeChild(defaultMsg);
-                    }
-                    
-                    // Adicionar os acertos em ordem reversa (mais recentes primeiro)
-                    ultimos.reverse().forEach(acerto => {
-                        const historyItem = document.createElement('div');
-                        historyItem.className = 'history-item bg-gray-50 dark:bg-gray-800 p-2 rounded mb-2';
-                        
-                        const sortedMatches = [...acerto.matchedNumbers].sort((a, b) => a - b);
-                        const monthName = monthNames[acerto.actualMonth - 1];
-                        
-                        // NOVO: Verificar se existem propriedades adicionais (para compatibilidade com históricos mais antigos)
-                        const hasPalpiteCounter = acerto.palpiteCounter !== undefined;
-                        const hasLastMatchPalpite = acerto.lastMatchPalpite !== undefined;
-                        const palpiteDiff = hasLastMatchPalpite && acerto.lastMatchPalpite > 0 ? 
-                            acerto.palpiteCounter - acerto.lastMatchPalpite : 0;
-                        
-                        // NOVO: Obter o intervalo utilizado se disponível
-                        const intervaloTexto = acerto.intervalo !== undefined ? 
-                            (intervalTexts[acerto.intervalo.toString()] || "Geração manual") : "Não registrado";
-                        
-                        historyItem.innerHTML = `
-                            <div class="text-xs text-gray-500 dark:text-gray-400">${acerto.datetime}</div>
-                            <div class="mt-1">
-                                <span class="font-medium">${acerto.matchCount} acertos:</span> 
-                                <span class="history-numbers text-red-600 dark:text-red-400">${sortedMatches.join(', ')}</span>
-                            </div>
-                            <div class="text-xs">
-                                Mês: <span class="${acerto.monthMatch ? 'text-green-600 dark:text-green-400 font-medium' : ''}">${monthName} (${acerto.actualMonth})</span>
-                                ${acerto.monthMatch ? ' ✓' : ''}
-                            </div>
-                            ${hasPalpiteCounter ? `
-                            <div class="text-xs mt-1">
-                                <span class="font-medium">Palpite #${acerto.palpiteCounter}</span>
-                            </div>` : ''}
-                            ${palpiteDiff > 0 ? `
-                            <div class="text-xs text-gray-500 dark:text-gray-400">
-                                <span class="font-medium">Diferença de palpites:</span> ${palpiteDiff} palpites
-                            </div>` : ''}
-                            <div class="text-xs text-gray-500 dark:text-gray-400">
-                                <span class="font-medium">Intervalo utilizado:</span> ${intervaloTexto}
-                            </div>
-                        `;
-                        
-                        historyContainer.appendChild(historyItem);
-                    });
-                }
-            }
-        });
-        
-        // Carregar frequências salvas se existirem
-        try {
-            const freqNumerosSalvos = localStorage.getItem('diaDaSorteFreqNumeros');
-            const freqMesesSalvos = localStorage.getItem('diaDaSorteFreqMeses');
-            
-            if (freqNumerosSalvos) {
-                registroNumerosAcertados = JSON.parse(freqNumerosSalvos);
-            }
-            
-            if (freqMesesSalvos) {
-                registroMesesAcertados = JSON.parse(freqMesesSalvos);
-            }
-        } catch (e) {
-            console.log("Erro ao carregar frequências:", e);
-            registroNumerosAcertados = {};
-            registroMesesAcertados = {};
-        }
-        
         // Função para verificar todos os palpites de uma vez
         function checkAllPalpites() {
             // Resetar estado e coletar todos os palpites
@@ -1859,14 +1918,8 @@
                     const monthInput = palpite.querySelector('.month-input');
                     
                     if (inputContainer && monthInput) {
-                        // Obter números dos inputs
-                        const inputs = inputContainer.querySelectorAll('.manual-number-input');
-                        const palpiteNums = [];
-                        inputs.forEach(input => {
-                            if (input.value) {
-                                palpiteNums.push(parseInt(input.value));
-                            }
-                        });
+                        // Obter os números do palpite (fixos + automáticos)
+                        const palpiteNums = getPalpiteNumbers(palpite);
                         
                         // Obter mês do input
                         const palpiteMes = monthInput.value ? parseInt(monthInput.value) : null;
@@ -1950,6 +2003,12 @@
         // Event listener para o botão de gerar números
         document.getElementById('generate-btn').addEventListener('click', generateRandomNumbers);
         
+        // Event listener para o botão de aplicar números fixos
+        document.getElementById('apply-fixed-numbers').addEventListener('click', applyFixedNumbers);
+        
+        // Event listener para o botão de gerar números automáticos para todos os palpites
+        document.getElementById('generate-auto-all').addEventListener('click', generateAutoNumbersForAllPalpites);
+        
         // Event listener para o select de intervalo
         document.getElementById('interval-select').addEventListener('change', function() {
             // Se já existir um intervalo, para ele primeiro
@@ -2011,14 +2070,30 @@
         });
         
         // Adicionar validação de input para limitar a 1-31 e evitar repetições
-        const manualInputs = document.querySelectorAll('.manual-number-input');
+        const fixedInputs = document.querySelectorAll('.fixed-number-input');
         
-        manualInputs.forEach(input => {
+        fixedInputs.forEach(input => {
             // Garantir que o valor esteja dentro do intervalo 1-31
             input.addEventListener('blur', function() {
                 const value = parseInt(this.value);
                 if (value < 1) this.value = 1;
                 if (value > 31) this.value = 31;
+            });
+            
+            // Destacar campo quando selecionado
+            input.addEventListener('focus', function() {
+                this.select();
+            });
+        });
+        
+        // Validação para campos de mês
+        const monthInputs = document.querySelectorAll('.month-input');
+        monthInputs.forEach(input => {
+            // Garantir que o valor esteja dentro do intervalo 1-12
+            input.addEventListener('blur', function() {
+                const value = parseInt(this.value);
+                if (value < 1) this.value = 1;
+                if (value > 12) this.value = 12;
             });
             
             // Destacar campo quando selecionado
@@ -2116,13 +2191,15 @@
                     <div class="flex items-center gap-3">
                         <div class="flex-1">
                             <div class="manual-input-container grid grid-cols-7 gap-2 w-full" data-palpite-id="${numero}">
-                                <input type="number" min="1" max="31" class="manual-number-input bg-gray-100 dark:bg-gray-700 border border-gray-300 dark:border-gray-600 rounded-md text-center h-10 text-sm font-medium text-gray-800 dark:text-white" placeholder="1">
-                                <input type="number" min="1" max="31" class="manual-number-input bg-gray-100 dark:bg-gray-700 border border-gray-300 dark:border-gray-600 rounded-md text-center h-10 text-sm font-medium text-gray-800 dark:text-white" placeholder="2">
-                                <input type="number" min="1" max="31" class="manual-number-input bg-gray-100 dark:bg-gray-700 border border-gray-300 dark:border-gray-600 rounded-md text-center h-10 text-sm font-medium text-gray-800 dark:text-white" placeholder="3">
-                                <input type="number" min="1" max="31" class="manual-number-input bg-gray-100 dark:bg-gray-700 border border-gray-300 dark:border-gray-600 rounded-md text-center h-10 text-sm font-medium text-gray-800 dark:text-white" placeholder="4">
-                                <input type="number" min="1" max="31" class="manual-number-input bg-gray-100 dark:bg-gray-700 border border-gray-300 dark:border-gray-600 rounded-md text-center h-10 text-sm font-medium text-gray-800 dark:text-white" placeholder="5">
-                                <input type="number" min="1" max="31" class="manual-number-input bg-gray-100 dark:bg-gray-700 border border-gray-300 dark:border-gray-600 rounded-md text-center h-10 text-sm font-medium text-gray-800 dark:text-white" placeholder="6">
-                                <input type="number" min="1" max="31" class="manual-number-input bg-gray-100 dark:bg-gray-700 border border-gray-300 dark:border-gray-600 rounded-md text-center h-10 text-sm font-medium text-gray-800 dark:text-white" placeholder="7">
+                                <!-- 4 números fixos (readonly) -->
+                                <input type="number" min="1" max="31" class="fixed-number-display bg-gray-100 dark:bg-gray-700 border border-gray-300 dark:border-gray-600 rounded-md text-center h-10 text-sm font-medium text-gray-800 dark:text-white" readonly>
+                                <input type="number" min="1" max="31" class="fixed-number-display bg-gray-100 dark:bg-gray-700 border border-gray-300 dark:border-gray-600 rounded-md text-center h-10 text-sm font-medium text-gray-800 dark:text-white" readonly>
+                                <input type="number" min="1" max="31" class="fixed-number-display bg-gray-100 dark:bg-gray-700 border border-gray-300 dark:border-gray-600 rounded-md text-center h-10 text-sm font-medium text-gray-800 dark:text-white" readonly>
+                                <input type="number" min="1" max="31" class="fixed-number-display bg-gray-100 dark:bg-gray-700 border border-gray-300 dark:border-gray-600 rounded-md text-center h-10 text-sm font-medium text-gray-800 dark:text-white" readonly>
+                                <!-- 3 números automáticos -->
+                                <div class="auto-number-box bg-gray-200 dark:bg-gray-600 border border-gray-300 dark:border-gray-700 rounded-md flex items-center justify-center h-10 text-sm font-medium text-gray-600 dark:text-gray-300">Auto</div>
+                                <div class="auto-number-box bg-gray-200 dark:bg-gray-600 border border-gray-300 dark:border-gray-700 rounded-md flex items-center justify-center h-10 text-sm font-medium text-gray-600 dark:text-gray-300">Auto</div>
+                                <div class="auto-number-box bg-gray-200 dark:bg-gray-600 border border-gray-300 dark:border-gray-700 rounded-md flex items-center justify-center h-10 text-sm font-medium text-gray-600 dark:text-gray-300">Auto</div>
                             </div>
                         </div>
                         <div class="w-16">
@@ -2246,6 +2323,165 @@
                     console.log(`Avançou para página ${paginaAtual} de ${maxPage}`);
                 }
             });
+            
+            // Configurar botões de exportação
+            const showFreqBtn = document.getElementById('show-freq-btn');
+            const frequencyStats = document.getElementById('frequency-stats');
+            const frequencyContent = document.getElementById('frequency-content');
+            
+            // NOVO: Botões para exportar histórico
+            const exportHistoryBtn = document.getElementById('export-history-btn');
+            const exportOptions = document.getElementById('export-options');
+            const exportExcelBtn = document.getElementById('export-excel-btn');
+            const exportHtmlBtn = document.getElementById('export-html-btn');
+            
+            // Adicionar o evento de clique ao botão de frequência
+            if (showFreqBtn) {
+                showFreqBtn.addEventListener('click', function() {
+                    // Alternar visibilidade da seção de estatísticas
+                    if (frequencyStats.classList.contains('hidden')) {
+                        // Atualizar o conteúdo com as estatísticas de frequência mais recentes
+                        frequencyContent.innerHTML = exibirEstatisticasFrequencia();
+                        frequencyStats.classList.remove('hidden');
+                        showFreqBtn.textContent = 'Ocultar Frequência';
+                        
+                        // Esconder opções de exportação
+                        exportOptions.classList.add('hidden');
+                        exportHistoryBtn.innerHTML = `
+                            <svg xmlns="http://www.w3.org/2000/svg" class="h-3 w-3" viewBox="0 0 20 20" fill="currentColor">
+                                <path fill-rule="evenodd" d="M3 17a1 1 0 011-1h12a1 1 0 110 2H4a1 1 0 01-1-1zm3.293-7.707a1 1 0 011.414 0L9 10.586V3a1 1 0 112 0v7.586l1.293-1.293a1 1 0 111.414 1.414l-3 3a1 1 0 01-1.414 0l-3-3a1 1 0 010-1.414z" clip-rule="evenodd" />
+                            </svg>
+                            Exportar`;
+                    } else {
+                        frequencyStats.classList.add('hidden');
+                        showFreqBtn.innerHTML = `
+                            <svg xmlns="http://www.w3.org/2000/svg" class="h-3 w-3" viewBox="0 0 20 20" fill="currentColor">
+                                <path d="M2 11a1 1 0 011-1h2a1 1 0 011 1v5a1 1 0 01-1 1H3a1 1 0 01-1-1v-5z" />
+                                <path d="M8 7a1 1 0 011-1h2a1 1 0 011 1v9a1 1 0 01-1 1H9a1 1 0 01-1-1V7z" />
+                                <path d="M14 4a1 1 0 011-1h2a1 1 0 011 1v12a1 1 0 01-1 1h-2a1 1 0 01-1-1V4z" />
+                            </svg>
+                            Frequência`;
+                    }
+                });
+            }
+            
+            // NOVO: Adicionar evento de clique ao botão de exportar histórico
+            if (exportHistoryBtn) {
+                exportHistoryBtn.addEventListener('click', function() {
+                    // Alternar visibilidade das opções de exportação
+                    if (exportOptions.classList.contains('hidden')) {
+                        exportOptions.classList.remove('hidden');
+                        exportHistoryBtn.textContent = 'Ocultar Exportação';
+                        
+                        // Esconder estatísticas de frequência
+                        frequencyStats.classList.add('hidden');
+                        showFreqBtn.innerHTML = `
+                            <svg xmlns="http://www.w3.org/2000/svg" class="h-3 w-3" viewBox="0 0 20 20" fill="currentColor">
+                                <path d="M2 11a1 1 0 011-1h2a1 1 0 011 1v5a1 1 0 01-1 1H3a1 1 0 01-1-1v-5z" />
+                                <path d="M8 7a1 1 0 011-1h2a1 1 0 011 1v9a1 1 0 01-1 1H9a1 1 0 01-1-1V7z" />
+                                <path d="M14 4a1 1 0 011-1h2a1 1 0 011 1v12a1 1 0 01-1 1h-2a1 1 0 01-1-1V4z" />
+                            </svg>
+                            Frequência`;
+                    } else {
+                        exportOptions.classList.add('hidden');
+                        exportHistoryBtn.innerHTML = `
+                            <svg xmlns="http://www.w3.org/2000/svg" class="h-3 w-3" viewBox="0 0 20 20" fill="currentColor">
+                                <path fill-rule="evenodd" d="M3 17a1 1 0 011-1h12a1 1 0 110 2H4a1 1 0 01-1-1zm3.293-7.707a1 1 0 011.414 0L9 10.586V3a1 1 0 112 0v7.586l1.293-1.293a1 1 0 111.414 1.414l-3 3a1 1 0 01-1.414 0l-3-3a1 1 0 010-1.414z" clip-rule="evenodd" />
+                            </svg>
+                            Exportar`;
+                    }
+                });
+            }
+            
+            // NOVO: Adicionar eventos de clique aos botões de exportação
+            if (exportExcelBtn) {
+                exportExcelBtn.addEventListener('click', exportToExcel);
+            }
+            
+            if (exportHtmlBtn) {
+                exportHtmlBtn.addEventListener('click', exportToHTML);
+            }
+            
+            // Carregar histórico de acertos visualmente se existir
+            const acertosSalvos = localStorage.getItem('diaDaSorteAcertos');
+            if (acertosSalvos) {
+                const historicos = JSON.parse(acertosSalvos);
+                const grandes = historicos.filter(h => h.matchCount >= 5);
+                
+                if (grandes.length > 0) {
+                    // Exibir os últimos 8 grandes acertos
+                    const ultimos = grandes.slice(-8);
+                    const historyContainer = document.getElementById('history-container');
+                    
+                    // Remover a mensagem padrão
+                    const defaultMsg = historyContainer.querySelector('.text-center.italic');
+                    if (defaultMsg) {
+                        historyContainer.removeChild(defaultMsg);
+                    }
+                    
+                    // Adicionar os acertos em ordem reversa (mais recentes primeiro)
+                    ultimos.reverse().forEach(acerto => {
+                        const historyItem = document.createElement('div');
+                        historyItem.className = 'history-item bg-gray-50 dark:bg-gray-800 p-2 rounded mb-2';
+                        
+                        const sortedMatches = [...acerto.matchedNumbers].sort((a, b) => a - b);
+                        const monthName = monthNames[acerto.actualMonth - 1];
+                        
+                        // NOVO: Verificar se existem propriedades adicionais (para compatibilidade com históricos mais antigos)
+                        const hasPalpiteCounter = acerto.palpiteCounter !== undefined;
+                        const hasLastMatchPalpite = acerto.lastMatchPalpite !== undefined;
+                        const palpiteDiff = hasLastMatchPalpite && acerto.lastMatchPalpite > 0 ? 
+                            acerto.palpiteCounter - acerto.lastMatchPalpite : 0;
+                        
+                        // NOVO: Obter o intervalo utilizado se disponível
+                        const intervaloTexto = acerto.intervalo !== undefined ? 
+                            (intervalTexts[acerto.intervalo.toString()] || "Geração manual") : "Não registrado";
+                        
+                        historyItem.innerHTML = `
+                            <div class="text-xs text-gray-500 dark:text-gray-400">${acerto.datetime}</div>
+                            <div class="mt-1">
+                                <span class="font-medium">${acerto.matchCount} acertos:</span> 
+                                <span class="history-numbers text-red-600 dark:text-red-400">${sortedMatches.join(', ')}</span>
+                            </div>
+                            <div class="text-xs">
+                                Mês: <span class="${acerto.monthMatch ? 'text-green-600 dark:text-green-400 font-medium' : ''}">${monthName} (${acerto.actualMonth})</span>
+                                ${acerto.monthMatch ? ' ✓' : ''}
+                            </div>
+                            ${hasPalpiteCounter ? `
+                            <div class="text-xs mt-1">
+                                <span class="font-medium">Palpite #${acerto.palpiteCounter}</span>
+                            </div>` : ''}
+                            ${palpiteDiff > 0 ? `
+                            <div class="text-xs text-gray-500 dark:text-gray-400">
+                                <span class="font-medium">Diferença de palpites:</span> ${palpiteDiff} palpites
+                            </div>` : ''}
+                            <div class="text-xs text-gray-500 dark:text-gray-400">
+                                <span class="font-medium">Intervalo utilizado:</span> ${intervaloTexto}
+                            </div>
+                        `;
+                        
+                        historyContainer.appendChild(historyItem);
+                    });
+                }
+            }
+            
+            // Carregar frequências salvas se existirem
+            try {
+                const freqNumerosSalvos = localStorage.getItem('diaDaSorteFreqNumeros');
+                const freqMesesSalvos = localStorage.getItem('diaDaSorteFreqMeses');
+                
+                if (freqNumerosSalvos) {
+                    registroNumerosAcertados = JSON.parse(freqNumerosSalvos);
+                }
+                
+                if (freqMesesSalvos) {
+                    registroMesesAcertados = JSON.parse(freqMesesSalvos);
+                }
+            } catch (e) {
+                console.log("Erro ao carregar frequências:", e);
+                registroNumerosAcertados = {};
+                registroMesesAcertados = {};
+            }
         });
     </script>
 </body>
