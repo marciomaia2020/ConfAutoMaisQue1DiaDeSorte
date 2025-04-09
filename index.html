@@ -1493,24 +1493,32 @@
                 // Criar um nome de arquivo baseado na data atual
                 const fileName = `Dia_da_Sorte_Historico_${new Date().toISOString().slice(0, 10)}.xlsx`;
                 
-                // Preparar os dados para o formato de planilha
-                const worksheetData = completeHistoryData.map(record => {
-                    return {
-                        'ID': record.id,
-                        'Data/Hora': record.datetime,
-                        'Palpite ID': record.palpiteId,
-                        'Número do Palpite': record.palpiteCounter || 'N/A',
-                        'Acertos': record.matchCount,
-                        'Números do Usuário': record.userNumbers.join(', '),
-                        'Números Sorteados': record.generatedNumbers.join(', '),
-                        'Números Acertados': record.matchedNumbers.join(', '),
-                        'Mês do Usuário': record.userMonth,
-                        'Mês Sorteado': record.actualMonth,
-                        'Acertou Mês': record.monthMatch ? 'Sim' : 'Não',
-                        'Intervalo': record.intervalo ? intervalTexts[record.intervalo.toString()] : 'N/A'
-                    };
-                });
-                
+				// Preparar os dados para o formato de planilha
+				const worksheetData = completeHistoryData.map(record => {
+					// Calcular a diferença de tempo desde o último acerto (se disponível)
+					const tempoDesdePrevio = record.lastMatchDate && record.timestamp ? 
+						formatTimeDifference(new Date(record.lastMatchDate), new Date(record.timestamp)) : 
+						"Primeiro acerto";
+					
+					// Calcular a diferença de palpites
+					const diferencaPalpites = (record.lastMatchPalpite > 0 && record.palpiteCounter) ? 
+						(record.palpiteCounter - record.lastMatchPalpite) : 0;
+					
+					return {
+						'Data/Hora': record.datetime,
+						'Acertos': record.matchCount,
+						'Números Acertados': record.matchedNumbers.join(', '),
+						'Números Sorteados': record.generatedNumbers.join(', '),
+						'Números do Usuário': record.userNumbers.join(', '),
+						'Mês Sorteado': record.actualMonth,
+						'Mês do Usuário': record.userMonth,
+						'Acertou Mês': record.monthMatch ? 'Sim' : 'Não',
+						'Número do Palpite': record.palpiteCounter || 'N/A',
+						'Tempo desde último acerto': tempoDesdePrevio,
+						'Diferença de palpites': diferencaPalpites,
+						'Intervalo': record.intervalo ? intervalTexts[record.intervalo.toString()] : 'N/A'
+					};
+				});                
                 // Criar a planilha
                 const worksheet = XLSX.utils.json_to_sheet(worksheetData);
                 
